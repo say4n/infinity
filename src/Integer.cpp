@@ -46,7 +46,50 @@ Integer::Integer(std::string x) {
                 this->integer.push_back(ch - '0');
         }
     }
+}
 
+bool Integer::operator==(const Integer& x) {
+    return this->positive == x.positive && this->integer == x.integer;
+}
+
+bool Integer::operator!=(const Integer& x) {
+    return this->positive != x.positive || this->integer != x.integer;
+}
+
+bool Integer::operator<(const Integer& x) {
+    if (this->positive == x.positive) {
+        return this->integer > x.integer;
+    }
+    else {
+        return this->integer > Integer(0).integer;
+    }
+}
+
+bool Integer::operator>(const Integer& x) {
+    if (this->positive == x.positive) {
+        return this->integer < x.integer;
+    }
+    else {
+        return this->integer < Integer(0).integer;
+    }
+}
+
+bool Integer::operator<=(const Integer& x) {
+    if (this->positive == x.positive) {
+        return this->integer >= x.integer;
+    }
+    else {
+        return this->integer >= Integer(0).integer;
+    }
+}
+
+bool Integer::operator>=(const Integer& x) {
+    if (this->positive == x.positive) {
+        return this->integer <= x.integer;
+    }
+    else {
+        return this->integer <= Integer(0).integer;
+    }
 }
 
 Integer Integer::operator+(const Integer& x) {
@@ -61,7 +104,7 @@ Integer Integer::operator+(const Integer& x) {
     // TODO: handle addition of numbers that differ in sign
     result.positive = x.positive & this->positive;
 
-    while (length--) {
+    while (length > 0) {
         sum = (*x_it + *y_it + carry) % 10;
         carry = (*x_it + *y_it + carry) - sum;
 
@@ -69,6 +112,7 @@ Integer Integer::operator+(const Integer& x) {
 
         x_it++;
         y_it++;
+        length--;
     }
 
     if (this->integer.size() >= x.integer.size()) {

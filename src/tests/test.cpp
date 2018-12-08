@@ -2,8 +2,8 @@
 #include <iostream>
 
 int main() {
-    Integer a("3894621856738568137500000000022000000");
-    Integer b("16630000001432");
+    Integer a("99");
+    Integer b("99");
     Integer c = -323432;
     Integer d ("-141241241241");
 
@@ -11,6 +11,13 @@ int main() {
     std::cout << "b :: " << b;
     std::cout << "c :: " << c;
     std::cout << "d :: " << d;
+
+    std::cout << "a <= b :: " << (a <= b) << std::endl;
+    std::cout << "a < b :: " << (a < b) << std::endl;
+    std::cout << "a >= b :: " << (a >= b) << std::endl;
+    std::cout << "a > b :: " << (a > b) << std::endl;
+    std::cout << "a == b :: " << (a == b) << std::endl;
+    std::cout << "a != b :: " << (a != b) << std::endl;
 
     std::cout << "a + b :: " << a + b;
     std::cout << "a - b :: " << a - b;

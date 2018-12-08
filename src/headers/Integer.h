@@ -8,10 +8,18 @@ class Integer{
         Integer();
         Integer(int x);
         Integer(std::string x);
+
+        bool operator==(const Integer& x);
+        bool operator!=(const Integer& x);
+        bool operator>(const Integer& x);
+        bool operator<(const Integer& x);
+        bool operator>=(const Integer& x);
+        bool operator<=(const Integer& x);
         Integer operator+(const Integer& x);
         Integer operator-(const Integer& x);
         Integer operator*(const Integer& x);
         Integer operator/(const Integer& x);
+
         friend std::ostream& operator<<(std::ostream &output,
                                         const Integer& x);
     private:
