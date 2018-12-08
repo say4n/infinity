@@ -3,6 +3,19 @@ arbitrary precision integer arithmetic
 
 ## usage
 
+1. Build `libInteger.a` using `make all` in the `src` directory.
+2. Copy the `Integer.h` and file to your project.
+3. Include `Integer.h` in your source file.
+4. Compile with `-L$(LIB)` and `-lInteger` flags where `LIB` is the directory where `libInteger.a` resides in.
+
+
+## tests
+
+Run `make test` in the `src` directory to compile the sanity checks. Execute the generated executable with `./test.out`.
+
+
+## example
+
 ```cpp
 #include <iostream>
 #include "Integer.h"
@@ -40,6 +53,7 @@ int main() {
 
 ## warning
 This a pet project to explore arbitrary precision integers. If you need arbitrary precision arithmetic, consider using something more mature like [GMP](https://gmplib.org).
+
 
 ## author
 Sayan Goswami (c) 2018
