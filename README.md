@@ -3,10 +3,10 @@
     <br>an arbitrary precision integer arithmetic library<br>
 <h2>
 
-<p align="center">
+<h5 align="center">
 <img src="https://forthebadge.com/images/badges/made-with-c-plus-plus.svg" height=30>
 <img src="https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg" height=30>
-</p>
+</h5>
 
 **infinity**, as of present, is by no means a replacement for any serious work, it is a weekend hack at best. Please proceed with extreme caution. You have been warned!
 
