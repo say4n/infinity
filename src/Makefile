@@ -1,5 +1,4 @@
 CXXFLAGS = -std=c++11
-INC = -I lib
 LIB = lib
 BUILD = build
 OUTPUT = test.out
