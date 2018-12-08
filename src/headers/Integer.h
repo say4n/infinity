@@ -1,3 +1,9 @@
+/**
+*   @file Integer.h
+*   @author Sayan Goswami
+*
+*   Arbitrary precison integers
+*/
 #ifndef INTEGER_H
 #define INTEGER_H
 #include <string>

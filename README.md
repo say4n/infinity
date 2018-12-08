@@ -1,5 +1,9 @@
-# infinity
-arbitrary precision integer arithmetic
+<h2 align="center">
+    <img src="assets/logo.png" height=230 alt="infinity: an arbitrary precision integer arithmetic library">
+    <br>an arbitrary precision integer arithmetic library<br>
+<h2>
+
+**infinity**, as of present, is by no means a replacement for any serious work, it is a weekend hack at best. Please proceed with extreme caution. You have been warned!
 
 ## usage
 
