@@ -5,6 +5,7 @@
 
 class Integer{
     public:
+        Integer();
         Integer(int x);
         Integer(std::string x);
         Integer operator+(const Integer& x);

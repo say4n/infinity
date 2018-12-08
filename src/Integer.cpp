@@ -2,6 +2,11 @@
 #include <iostream>
 #include <cctype>
 
+
+Integer::Integer(){
+    // empty
+}
+
 Integer::Integer(int x) {
     if (x>=0) {
         this->positive = true;
@@ -45,22 +50,61 @@ Integer::Integer(std::string x) {
 }
 
 Integer Integer::operator+(const Integer& x) {
-    Integer result(0);
+    Integer result;
+    int length = std::min(this->integer.size(), x.integer.size());
+
+    auto x_it = x.integer.begin();
+    auto y_it = this->integer.begin();
+
+    int carry = 0, sum = 0;
+
+    // TODO: handle addition of numbers that differ in sign
+    result.positive = x.positive & this->positive;
+
+    while (length--) {
+        sum = (*x_it + *y_it + carry) % 10;
+        carry = (*x_it + *y_it + carry) - sum;
+
+        result.integer.push_back(sum);
+
+        x_it++;
+        y_it++;
+    }
+
+    if (this->integer.size() >= x.integer.size()) {
+        while (y_it != this->integer.end()) {
+            sum = (*y_it + carry) % 10;
+            carry = (*y_it + carry) - sum;
+
+            result.integer.push_back(sum);
+            y_it++;
+        }
+    }
+    else {
+        while (x_it != x.integer.end()) {
+            sum = (*x_it + carry) % 10;
+            carry = (*x_it + carry) - sum;
+
+            result.integer.push_back(sum);
+            x_it++;
+        }
+    }
+
     return result;
 }
 
 Integer Integer::operator-(const Integer& x) {
-    Integer result(0);
+    Integer result;
     return result;
 }
 
 Integer Integer::operator*(const Integer& x) {
-    Integer result(0);
+    Integer result;
     return result;
 }
 
 Integer Integer::operator/(const Integer& x) {
-    Integer result(0);
+    Integer result;
     return result;
 }
 
