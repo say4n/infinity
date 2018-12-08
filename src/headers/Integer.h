@@ -3,6 +3,19 @@
 #include <string>
 #include <list>
 
+/** \brief Arbitrary precision Integer arithmetic and logical operations.
+*
+*   Supported operations:
+*   - Arithmetic
+*       -# Addition
+*       -# Subtraction
+*       -# Multiplication
+*       -# Division
+*       -# Negation
+*   - Logical
+*       -# Comparison (<, >, <=, >=)
+*       -# Equality (!=, ==)
+*/
 class Integer{
     public:
         Integer();
