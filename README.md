@@ -1,9 +1,9 @@
 <h2 align="center">
-    <img src="assets/logo.png" height=230 alt="infinity: an arbitrary precision integer arithmetic library">
+    <img src="https://github.com/Sayan98/infinity/blob/master/assets/logo.png" height=200 alt="infinity: an arbitrary precision integer arithmetic library">
     <br>an arbitrary precision integer arithmetic library<br>
 <h2>
 
-**infinity**, as of present, is by no means a replacement for any serious work, it is a weekend hack at best. Please proceed with extreme caution. You have been warned!
+<p>**infinity**, as of present, is by no means a replacement for any serious work, it is a weekend hack at best. Please proceed with extreme caution. You have been warned!</p>
 
 ## usage
 
