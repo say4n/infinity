@@ -19,6 +19,7 @@ int main() {
     std::cout << "a == b :: " << (a == b) << std::endl;
     std::cout << "a != b :: " << (a != b) << std::endl;
 
+    std::cout << "-a :: " << -a;
     std::cout << "a + b :: " << a + b;
     std::cout << "a - b :: " << a - b;
     std::cout << "a * b :: " << a * b;

@@ -16,6 +16,7 @@ class Integer{
         bool operator>=(const Integer& x);
         bool operator<=(const Integer& x);
         Integer operator+(const Integer& x);
+        Integer operator-();
         Integer operator-(const Integer& x);
         Integer operator*(const Integer& x);
         Integer operator/(const Integer& x);

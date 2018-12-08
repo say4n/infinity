@@ -52,10 +52,6 @@ bool Integer::operator==(const Integer& x) {
     return this->positive == x.positive && this->integer == x.integer;
 }
 
-bool Integer::operator!=(const Integer& x) {
-    return this->positive != x.positive || this->integer != x.integer;
-}
-
 bool Integer::operator>(const Integer& x) {
     if (this->positive == x.positive) {
         return this->integer > x.integer;
@@ -65,31 +61,20 @@ bool Integer::operator>(const Integer& x) {
     }
 }
 
+bool Integer::operator!=(const Integer& x) {
+    return !(*this == x);
+}
+
 bool Integer::operator<(const Integer& x) {
-    if (this->positive == x.positive) {
-        return this->integer < x.integer;
-    }
-    else {
-        return this->integer < Integer(0).integer;
-    }
+    return !(*this > x && *this != x);
 }
 
 bool Integer::operator>=(const Integer& x) {
-    if (this->positive == x.positive) {
-        return this->integer >= x.integer;
-    }
-    else {
-        return this->integer >= Integer(0).integer;
-    }
+    return (*this > x || *this == x);
 }
 
 bool Integer::operator<=(const Integer& x) {
-    if (this->positive == x.positive) {
-        return this->integer <= x.integer;
-    }
-    else {
-        return this->integer <= Integer(0).integer;
-    }
+    return (*this < x || *this == x);
 }
 
 Integer Integer::operator+(const Integer& x) {
@@ -140,6 +125,12 @@ Integer Integer::operator+(const Integer& x) {
         result.integer.push_back(carry);
     }
 
+    return result;
+}
+
+Integer Integer::operator-() {
+    Integer result = *this;
+    result.positive = !result.positive;
     return result;
 }
 
