@@ -4,7 +4,7 @@ arbitrary precision integer arithmetic
 ## usage
 
 1. Build `libInteger.a` using `make all` in the `src` directory.
-2. Copy the `Integer.h` and file to your project.
+2. Copy the `Integer.h` and `libInteger.a` file to your project.
 3. Include `Integer.h` in your source file.
 4. Compile with `-L$(LIB)` and `-lInteger` flags where `LIB` is the directory where `libInteger.a` resides in.
 
