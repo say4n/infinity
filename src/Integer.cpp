@@ -56,7 +56,7 @@ bool Integer::operator!=(const Integer& x) {
     return this->positive != x.positive || this->integer != x.integer;
 }
 
-bool Integer::operator<(const Integer& x) {
+bool Integer::operator>(const Integer& x) {
     if (this->positive == x.positive) {
         return this->integer > x.integer;
     }
@@ -65,7 +65,7 @@ bool Integer::operator<(const Integer& x) {
     }
 }
 
-bool Integer::operator>(const Integer& x) {
+bool Integer::operator<(const Integer& x) {
     if (this->positive == x.positive) {
         return this->integer < x.integer;
     }
@@ -74,7 +74,7 @@ bool Integer::operator>(const Integer& x) {
     }
 }
 
-bool Integer::operator<=(const Integer& x) {
+bool Integer::operator>=(const Integer& x) {
     if (this->positive == x.positive) {
         return this->integer >= x.integer;
     }
@@ -83,7 +83,7 @@ bool Integer::operator<=(const Integer& x) {
     }
 }
 
-bool Integer::operator>=(const Integer& x) {
+bool Integer::operator<=(const Integer& x) {
     if (this->positive == x.positive) {
         return this->integer <= x.integer;
     }
@@ -106,7 +106,9 @@ Integer Integer::operator+(const Integer& x) {
 
     while (length > 0) {
         sum = (*x_it + *y_it + carry) % 10;
-        carry = (*x_it + *y_it + carry) - sum;
+        carry = (*x_it + *y_it + carry) / 10;
+
+        // std::cout << sum << " " << carry << std::endl;
 
         result.integer.push_back(sum);
 
@@ -118,20 +120,24 @@ Integer Integer::operator+(const Integer& x) {
     if (this->integer.size() >= x.integer.size()) {
         while (y_it != this->integer.end()) {
             sum = (*y_it + carry) % 10;
-            carry = (*y_it + carry) - sum;
+            carry = (*y_it + carry) / 10;
 
             result.integer.push_back(sum);
             y_it++;
         }
     }
-    else {
+    else if (this->integer.size() < x.integer.size()) {
         while (x_it != x.integer.end()) {
             sum = (*x_it + carry) % 10;
-            carry = (*x_it + carry) - sum;
+            carry = (*x_it + carry) / 10;
 
             result.integer.push_back(sum);
             x_it++;
         }
+    }
+
+    if (carry != 0) {
+        result.integer.push_back(carry);
     }
 
     return result;
