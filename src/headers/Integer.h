@@ -1,6 +1,7 @@
 #ifndef INTEGER_H
 #define INTEGER_H
 #include <string>
+#include <list>
 
 class Integer{
     public:
@@ -13,7 +14,8 @@ class Integer{
         friend std::ostream& operator<<(std::ostream &output,
                                         const Integer& x);
     private:
-        int integer;
+        std::list<int> integer;
+        bool positive;
 };
 
 #endif

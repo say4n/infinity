@@ -1,3 +1,4 @@
+CXXFLAGS = -std=c++11
 INC = -I ./headers
 OUTPUT = test.out
 
@@ -7,13 +8,13 @@ all: Integer.o
 rebuild: clean all
 
 test: test.o Integer.o
-	g++ test.o Integer.o -o $(OUTPUT)
+	$(CXX) $(CXXFLAGS) test.o Integer.o -o $(OUTPUT)
 
 test.o: tests/test.cpp headers/Integer.h
-	g++ $(INC) -c tests/test.cpp
+	$(CXX) $(CXXFLAGS) $(INC) -c tests/test.cpp
 
 Integer.o: Integer.cpp headers/Integer.h
-	g++ $(INC) -c Integer.cpp
+	$(CXX) $(CXXFLAGS) $(INC) -c Integer.cpp
 
 
 clean:
