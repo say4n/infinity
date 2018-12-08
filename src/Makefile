@@ -9,6 +9,9 @@ all: Integer
 build: all
 rebuild: clean all
 
+docs:
+	doxygen Doxyfile
+
 test: tests/test.cpp Integer
 	mkdir -p $(BUILD)
 	cp tests/test.cpp $(BUILD)
@@ -22,6 +25,9 @@ Integer: Integer.o
 
 Integer.o: Integer.cpp
 	$(CXX) $(CXXFLAGS) -c Integer.cpp
+
+cleandoc:
+	rm -r ../docs
 
 clean:
 	rm -r $(LIB)
