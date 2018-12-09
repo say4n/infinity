@@ -1,5 +1,5 @@
 <h2 align="center">
-    <img src="assets/infinity.svg" height=200 alt="infinity: an arbitrary precision integer arithmetic library">
+    <img src="https://cdn.jsdelivr.net/gh/Sayan98/infinity@latest/assets/infinity.svg" height=200 alt="infinity: an arbitrary precision integer arithmetic library">
     <br>an arbitrary precision integer arithmetic library<br>
 <h2>
 
