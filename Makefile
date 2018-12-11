@@ -4,10 +4,12 @@ BUILD = build
 OUTPUT = test.out
 DOCS = docs
 
-.PHONY: all
+.PHONY: all build rebuild clean
+
 all: Integer docs test
 
 build: all
+
 rebuild: clean all
 
 docs:
