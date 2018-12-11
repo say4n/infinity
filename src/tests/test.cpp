@@ -2,10 +2,10 @@
 #include <iostream>
 
 int main() {
-    Integer a("199999999999999999999999999999999999999999999999");
-    Integer b("999999999999999999999999999999999999999999999999");
-    Integer c = -323432;
-    Integer d ("-141241241241");
+    Integer a("19");
+    Integer b("-99");
+    Integer c = -32;
+    Integer d = 145;
 
     std::cout << "a :: " << a;
     std::cout << "b :: " << b;
