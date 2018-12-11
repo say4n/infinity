@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cctype>
 
-#define DEBUG true
+#define DEBUG false
 
 
 Integer::Integer(){
@@ -262,7 +262,42 @@ Integer Integer::operator-(const Integer& x) {
 }
 
 Integer Integer::operator*(const Integer& x) {
-    Integer result;
+    int maxlen = x.integer.size() + this->integer.size();
+    Integer result(std::string(maxlen, '0'));
+
+    result.positive = (this->positive && x.positive) || (!this->positive && !x.positive);
+
+    int offset = 0;
+
+    for(auto mult = x.integer.begin(); mult != x.integer.end(); mult++) {
+        int carry = 0, product = 0, sum;
+        auto res_it = result.integer.begin();
+        for(int i=0; i<offset; i++)
+            res_it++;
+
+        for(auto mpcd = this->integer.begin(); mpcd != this->integer.end(); mpcd++) {
+
+            product = (*mult) * (*mpcd);
+            sum = product + carry + *res_it;
+            carry = sum/10;
+            sum = sum%10;
+
+            if (DEBUG) printf("\n*mult: %d, *mpcd: %d, *res_it: %d, product: %d, sum %d, carry %d, pos: %ld\n", *mult, *mpcd, *res_it, product, sum, carry, std::distance(result.integer.begin(), res_it));
+
+            *res_it = sum;
+            res_it++;
+        }
+
+        if (carry>0) {
+            sum = carry + *res_it;
+            carry = sum/10;
+            sum = sum%10;
+
+            *res_it = sum;
+        }
+
+        offset++;
+    }
     return result;
 }
 
@@ -273,7 +308,7 @@ Integer Integer::operator/(const Integer& x) {
 
 std::ostream& operator<<(std::ostream& output, const Integer& x) {
     output << "Integer(" << (x.positive?'+':'-');
-    for (auto digit=x.integer.rbegin(); digit !=x.integer.rend(); digit++) {
+    for (auto digit = x.integer.rbegin(); digit != x.integer.rend(); digit++) {
         output << *digit;
     }
     output << ")" << std::endl;
