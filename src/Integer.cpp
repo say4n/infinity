@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cctype>
 
+#define DEBUG true
+
 
 Integer::Integer(){
     this->positive = -1;
@@ -48,16 +50,55 @@ Integer::Integer(std::string x) {
     }
 }
 
+Integer Integer::abs(const Integer& x) {
+    const Integer zero = 0;
+    if (const_cast<Integer&>(x) > zero) {
+        return x;
+    }
+    else {
+        return -const_cast<Integer&>(x);
+    }
+}
+
 bool Integer::operator==(const Integer& x) {
     return this->positive == x.positive && this->integer == x.integer;
 }
 
 bool Integer::operator>(const Integer& x) {
     if (this->positive == x.positive) {
-        return this->integer > x.integer;
+        // signs are same
+        if (this->integer.size() > x.integer.size()) {
+            // longer number
+            return true;
+        }
+        else if (this->integer.size() < x.integer.size()) {
+            return false;
+        }
+        else {
+            bool flag = true;
+
+            int length = x.integer.size();
+
+            auto x_it = x.integer.rbegin();
+            auto y_it = this->integer.rbegin();
+
+            while (length >=0) {
+                if (*x_it >= *y_it) {
+                    flag = false;
+                    break;
+                }
+
+                length--;
+                x_it++;
+                y_it++;
+            }
+
+            return flag;
+        }
     }
     else {
-        return this->integer > Integer(0).integer;
+        // signs differ and this is positive
+        return this->positive;
     }
 }
 
@@ -66,7 +107,7 @@ bool Integer::operator!=(const Integer& x) {
 }
 
 bool Integer::operator<(const Integer& x) {
-    return !(*this > x && *this != x);
+    return !(*this > x) && *this != x;
 }
 
 bool Integer::operator>=(const Integer& x) {
@@ -81,7 +122,7 @@ Integer Integer::operator+(const Integer& x) {
     Integer result;
 
     if (x.positive && this->positive) {
-        std::cerr << "\nadd::(+,+)";
+        if (DEBUG) std::cout << "\nadd::(+,+)";
         result.positive = x.positive & this->positive;
 
         int length = std::min(this->integer.size(), x.integer.size());
@@ -127,12 +168,12 @@ Integer Integer::operator+(const Integer& x) {
     }
     else if (!x.positive) {
         // *this + (-x)
-        std::cerr << "\nadd::(+,-)";
+        if (DEBUG) std::cout << "\nadd::(+,-)";
         result = *this - (-*const_cast<Integer*>(&x));
     }
     else if (!this->positive) {
         // x + (-*this)
-        std::cerr << "\nadd::(-,+)";
+        if (DEBUG) std::cout << "\nadd::(-,+)";
         result = *const_cast<Integer*>(&x) - *this;
     }
     else {
@@ -153,28 +194,59 @@ Integer Integer::operator-(const Integer& x) {
 
     if (this->positive && !x.positive) {
         // *this - (-x)
-        std::cerr << "\nsub::(+,-)";
+        if (DEBUG) std::cout << "\nsub::(+,-)";
         result = *this + (-*const_cast<Integer*>(&x));
     }
     else if (x.positive && !this->positive) {
         // x - (-*this)
-        std::cerr << "\nsub::(-,+)";
+        if (DEBUG) std::cout << "\nsub::(-,+)";
         result = -*this + x;
     }
     else {
-        if (*this > x) {
+        if (*this >= x) {
             // *this - x
-            std::cerr << "\nsub::(+,+)::>";
+            if (DEBUG) std::cout << "\nsub::(+,+)::>=";
             result.positive = true;
-
-            //  TODO: perform subtraction
-
         }
         else {
             // x - *this
-            std::cerr << "\nsub::(+,+)::<=";
-            result = *const_cast<Integer*>(&x) - *this;
+            if (DEBUG) std::cout << "\nsub::(+,+)::<";
+
+
             result.positive = false;
+        }
+
+        int length = x.integer.size();
+
+        auto x_it = x.integer.begin();
+        auto y_it = this->integer.begin();
+
+        int borrow = 0, difference = 0;
+
+        while(length > 0) {
+            difference = (*y_it - *x_it - borrow);
+            if (difference < 0) {
+                borrow = 1;
+                difference += 10;
+            }
+            else {
+                borrow = 0;
+            }
+
+            result.integer.push_back(difference);
+
+            length--;
+            x_it++;
+            y_it++;
+        }
+
+        while(y_it != this->integer.end()) {
+            result.integer.push_back(*y_it - borrow);
+            if(borrow > 0) {
+                borrow = 0;
+            }
+
+            y_it++;
         }
     }
 

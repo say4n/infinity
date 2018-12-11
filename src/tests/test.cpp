@@ -3,7 +3,7 @@
 
 int main() {
     Integer a("19");
-    Integer b("-99");
+    Integer b("80");
     Integer c = -32;
     Integer d = 145;
 

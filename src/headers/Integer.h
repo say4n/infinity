@@ -39,6 +39,7 @@ class Integer{
         Integer operator-(const Integer& x);
         Integer operator*(const Integer& x);
         Integer operator/(const Integer& x);
+        static Integer abs(const Integer& x);
 
         friend std::ostream& operator<<(std::ostream &output,
                                         const Integer& x);
