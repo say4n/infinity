@@ -29,7 +29,7 @@ Integer.o: src/Integer.cpp
 	$(CXX) $(CXXFLAGS) -c src/Integer.cpp
 
 clean:
-	rm -r $(LIB)
-	rm -r $(BUILD)
-	rm -r $(DOCS)
+	rm -rf $(LIB)
+	rm -rf $(BUILD)
+	rm -rf $(DOCS)
 	rm -f *.out
