@@ -4,7 +4,7 @@
 
 
 Integer::Integer(){
-    // empty
+    this->positive = -1;
 }
 
 Integer::Integer(int x) {
@@ -79,50 +79,64 @@ bool Integer::operator<=(const Integer& x) {
 
 Integer Integer::operator+(const Integer& x) {
     Integer result;
-    int length = std::min(this->integer.size(), x.integer.size());
 
-    auto x_it = x.integer.begin();
-    auto y_it = this->integer.begin();
+    if (x.positive && this->positive) {
+        std::cerr << "\nadd::(+,+)";
+        result.positive = x.positive & this->positive;
 
-    int carry = 0, sum = 0;
+        int length = std::min(this->integer.size(), x.integer.size());
 
-    // TODO: handle addition of numbers that differ in sign
-    result.positive = x.positive & this->positive;
+        auto x_it = x.integer.begin();
+        auto y_it = this->integer.begin();
 
-    while (length > 0) {
-        sum = (*x_it + *y_it + carry) % 10;
-        carry = (*x_it + *y_it + carry) / 10;
+        int carry = 0, sum = 0;
 
-        // std::cout << sum << " " << carry << std::endl;
-
-        result.integer.push_back(sum);
-
-        x_it++;
-        y_it++;
-        length--;
-    }
-
-    if (this->integer.size() >= x.integer.size()) {
-        while (y_it != this->integer.end()) {
-            sum = (*y_it + carry) % 10;
-            carry = (*y_it + carry) / 10;
+        while (length > 0) {
+            sum = (*x_it + *y_it + carry) % 10;
+            carry = (*x_it + *y_it + carry) / 10;
 
             result.integer.push_back(sum);
-            y_it++;
-        }
-    }
-    else if (this->integer.size() < x.integer.size()) {
-        while (x_it != x.integer.end()) {
-            sum = (*x_it + carry) % 10;
-            carry = (*x_it + carry) / 10;
 
-            result.integer.push_back(sum);
             x_it++;
+            y_it++;
+            length--;
+        }
+
+        if (this->integer.size() >= x.integer.size()) {
+            while (y_it != this->integer.end()) {
+                sum = (*y_it + carry) % 10;
+                carry = (*y_it + carry) / 10;
+
+                result.integer.push_back(sum);
+                y_it++;
+            }
+        }
+        else if (this->integer.size() < x.integer.size()) {
+            while (x_it != x.integer.end()) {
+                sum = (*x_it + carry) % 10;
+                carry = (*x_it + carry) / 10;
+
+                result.integer.push_back(sum);
+                x_it++;
+            }
+        }
+
+        if (carry != 0) {
+            result.integer.push_back(carry);
         }
     }
+    else if (!x.positive) {
+        // *this + (-x)
+        std::cerr << "\nadd::(+,-)";
+        result = *this - (-*const_cast<Integer*>(&x));
+    }
+    else if (!this->positive) {
+        // x + (-*this)
+        std::cerr << "\nadd::(-,+)";
+        result = *const_cast<Integer*>(&x) - *this;
+    }
+    else {
 
-    if (carry != 0) {
-        result.integer.push_back(carry);
     }
 
     return result;
@@ -136,6 +150,34 @@ Integer Integer::operator-() {
 
 Integer Integer::operator-(const Integer& x) {
     Integer result;
+
+    if (this->positive && !x.positive) {
+        // *this - (-x)
+        std::cerr << "\nsub::(+,-)";
+        result = *this + (-*const_cast<Integer*>(&x));
+    }
+    else if (x.positive && !this->positive) {
+        // x - (-*this)
+        std::cerr << "\nsub::(-,+)";
+        result = -*this + x;
+    }
+    else {
+        if (*this > x) {
+            // *this - x
+            std::cerr << "\nsub::(+,+)::>";
+            result.positive = true;
+
+            //  TODO: perform subtraction
+
+        }
+        else {
+            // x - *this
+            std::cerr << "\nsub::(+,+)::<=";
+            result = *const_cast<Integer*>(&x) - *this;
+            result.positive = false;
+        }
+    }
+
     return result;
 }
 
