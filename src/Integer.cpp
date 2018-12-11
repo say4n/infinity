@@ -72,9 +72,11 @@ bool Integer::operator>(const Integer& x) {
             return true;
         }
         else if (this->integer.size() < x.integer.size()) {
+            // shorter number
             return false;
         }
         else {
+            // equal length
             bool flag = true;
 
             int length = x.integer.size();
@@ -83,8 +85,12 @@ bool Integer::operator>(const Integer& x) {
             auto y_it = this->integer.rbegin();
 
             while (length >=0) {
-                if (*x_it >= *y_it) {
+                if (*x_it > *y_it) {
                     flag = false;
+                    break;
+                }
+                else if (*x_it < *y_it) {
+                    flag = true;
                     break;
                 }
 
@@ -122,7 +128,7 @@ Integer Integer::operator+(const Integer& x) {
     Integer result;
 
     if (x.positive && this->positive) {
-        if (DEBUG) std::cout << "\nadd::(+,+)";
+        if (DEBUG) std::cerr << "\nadd::(+,+)";
         result.positive = x.positive & this->positive;
 
         int length = std::min(this->integer.size(), x.integer.size());
@@ -168,12 +174,12 @@ Integer Integer::operator+(const Integer& x) {
     }
     else if (!x.positive) {
         // *this + (-x)
-        if (DEBUG) std::cout << "\nadd::(+,-)";
+        if (DEBUG) std::cerr << "\nadd::(+,-)";
         result = *this - (-*const_cast<Integer*>(&x));
     }
     else if (!this->positive) {
         // x + (-*this)
-        if (DEBUG) std::cout << "\nadd::(-,+)";
+        if (DEBUG) std::cerr << "\nadd::(-,+)";
         result = *const_cast<Integer*>(&x) - *this;
     }
     else {
@@ -194,26 +200,28 @@ Integer Integer::operator-(const Integer& x) {
 
     if (this->positive && !x.positive) {
         // *this - (-x)
-        if (DEBUG) std::cout << "\nsub::(+,-)";
+        if (DEBUG) std::cerr << "\nsub::(+,-)";
         result = *this + (-*const_cast<Integer*>(&x));
     }
     else if (x.positive && !this->positive) {
         // x - (-*this)
-        if (DEBUG) std::cout << "\nsub::(-,+)";
+        if (DEBUG) std::cerr << "\nsub::(-,+)";
         result = -*this + x;
     }
     else {
         if (*this >= x) {
             // *this - x
-            if (DEBUG) std::cout << "\nsub::(+,+)::>=";
+            if (DEBUG) std::cerr << "\nsub::(+,+)::>=";
             result.positive = true;
         }
         else {
             // x - *this
-            if (DEBUG) std::cout << "\nsub::(+,+)::<";
+            if (DEBUG) std::cerr << "\nsub::(+,+)::<";
 
-
+            result = const_cast<Integer&>(x) - const_cast<const Integer&>(*this);
             result.positive = false;
+
+            return result;
         }
 
         int length = x.integer.size();
