@@ -378,7 +378,7 @@ Integer Integer::operator%(const Integer& rhs) {
 
         result = tmp;
 
-        if (result + result > rhs) {
+        if (result > const_cast<Integer&>(rhs) - result) {
             result = const_cast<Integer&>(rhs) - result;
         }
     }
