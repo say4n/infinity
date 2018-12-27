@@ -54,7 +54,7 @@ Integer::Integer(std::string x) {
 Integer Integer::fix_leading_zeros(const Integer& x) {
     Integer result = x;
 
-    while (result.integer.back() == 0 && result.integer.size() > 0) {
+    while (result.integer.back() == 0 && result.integer.size() > 1) {
         result.integer.pop_back();
     }
 
@@ -197,6 +197,22 @@ Integer Integer::operator+(const Integer& rhs) {
     return Integer::fix_leading_zeros(result);
 }
 
+void Integer::operator++() {
+    *this = Integer::fix_leading_zeros(*this + Integer(1));
+}
+
+void Integer::operator--() {
+    *this = Integer::fix_leading_zeros(*this - Integer(1));
+}
+
+void Integer::operator++(int) {
+    *this = Integer::fix_leading_zeros(*this + Integer(1));
+}
+
+void Integer::operator--(int) {
+    *this = Integer::fix_leading_zeros(*this - Integer(1));
+}
+
 Integer Integer::operator-() {
     Integer result = *this;
     result.positive = !result.positive;
@@ -328,12 +344,48 @@ Integer Integer::operator/(const Integer& rhs) {
 
         while(tmp > rhs) {
             tmp = tmp - rhs;
-            result = result + Integer(1);
+            result++;
         }
     }
 
     return Integer::fix_leading_zeros(result);
 }
+
+Integer Integer::operator%(const Integer& rhs) {
+    Integer result;
+
+    // DIV_BY_ZERO
+    assert(Integer(0) != rhs);
+
+    // POSITIVE_MOD
+    assert(Integer(0) < rhs);
+    assert(Integer(0) < *this);
+
+    if (*this < rhs) {
+        result = *this;
+    }
+    else if (Integer(1) == rhs){
+        result = Integer(0);
+    }
+    else {
+        // slow division
+        Integer tmp = *this;
+
+        while(tmp > rhs) {
+            tmp = tmp - rhs;
+            result++;
+        }
+
+        result = tmp;
+
+        if (result + result > rhs) {
+            result = const_cast<Integer&>(rhs) - result;
+        }
+    }
+
+    return Integer::fix_leading_zeros(result);
+}
+
 
 std::ostream& operator<<(std::ostream& output, const Integer& rhs) {
     output << "Integer(" << (rhs.positive?'+':'-');

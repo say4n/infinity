@@ -26,31 +26,39 @@ class Integer{
     public:
         // Constructors
         Integer();
-        Integer(int x);
-        Integer(std::string x);
+        Integer(int);
+        Integer(std::string);
 
-        // Logical operators
-        bool operator==(const Integer& x);
-        bool operator!=(const Integer& x);
-        bool operator>(const Integer& x);
-        bool operator<(const Integer& x);
-        bool operator>=(const Integer& x);
-        bool operator<=(const Integer& x);
+        // Relational operators
+        bool operator==(const Integer&);
+        bool operator!=(const Integer&);
+        bool operator>(const Integer&);
+        bool operator<(const Integer&);
+        bool operator>=(const Integer&);
+        bool operator<=(const Integer&);
 
         // Arithmetic operators
-        Integer operator+(const Integer& x);
+        /// Unary
         Integer operator-();
-        Integer operator-(const Integer& x);
-        Integer operator*(const Integer& x);
-        Integer operator/(const Integer& x);
+        //// prefix
+        void operator++();
+        void operator--();
+        //// postfix
+        void operator++(int);
+        void operator--(int);
+        /// Binary
+        Integer operator+(const Integer&);
+        Integer operator-(const Integer&);
+        Integer operator*(const Integer&);
+        Integer operator/(const Integer&);
+        Integer operator%(const Integer&);
 
-        // Stream operators
-        friend std::ostream& operator<<(std::ostream &output,
-                                        const Integer& x);
+        // Bitwise operators
+        friend std::ostream& operator<<(std::ostream&, const Integer&);
 
         // Static members
-        static Integer abs(const Integer& x);
-        static Integer fix_leading_zeros(const Integer& x);
+        static Integer abs(const Integer&);
+        static Integer fix_leading_zeros(const Integer&);
 
     private:
         std::list<int> integer;
