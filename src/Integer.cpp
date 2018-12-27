@@ -1,6 +1,7 @@
 #include "headers/Integer.h"
 #include <iostream>
 #include <cctype>
+#include <cassert>
 
 #define DEBUG false
 
@@ -311,6 +312,9 @@ Integer Integer::operator*(const Integer& x) {
 
 Integer Integer::operator/(const Integer& x) {
     Integer result;
+
+    // DIV_BY_ZERO
+    assert(Integer(0) != x);
 
     if (*this < x) {
         result = 0;
