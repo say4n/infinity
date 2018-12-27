@@ -55,6 +55,7 @@ int main() {
     std::cout << "a - b :: " << a - b;
     std::cout << "a * b :: " << a * b;
     std::cout << "a / b :: " << a / b;
+    std::cout << "a % b :: " << a % b;
 
     return 0;
 }
@@ -77,6 +78,7 @@ a + b :: Integer(+84)
 a - b :: Integer(+76)
 a * b :: Integer(+320)
 a / b :: Integer(+20)
+a % b :: Integer(+0)
 ```
 
 
