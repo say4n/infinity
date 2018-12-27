@@ -30,18 +30,16 @@ Run `make test` in the `src` directory to compile the sanity checks. Execute the
 #include "Integer.h"
 
 int main() {
-    Integer a("199999999999999999999999999999999999999999999999");
-    Integer b("999999999999999999999999999999999999999999999999");
-    Integer c = -319879352;
-    Integer d ("-141241241241");
+    Integer a("80");
+    Integer b("4");
+    Integer c = -32;
+    Integer d = 145;
 
-    // Integers
     std::cout << "a :: " << a;
     std::cout << "b :: " << b;
     std::cout << "c :: " << c;
     std::cout << "d :: " << d;
 
-    // logical ops
     std::cout << "a <= b :: " << (a <= b) << std::endl;
     std::cout << "a < b :: " << (a < b) << std::endl;
     std::cout << "a >= b :: " << (a >= b) << std::endl;
@@ -49,7 +47,6 @@ int main() {
     std::cout << "a == b :: " << (a == b) << std::endl;
     std::cout << "a != b :: " << (a != b) << std::endl;
 
-    // arithmetic ops
     std::cout << "-a :: " << -a;
     std::cout << "a + b :: " << a + b;
     std::cout << "a - b :: " << a - b;
