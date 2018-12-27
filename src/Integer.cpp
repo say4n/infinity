@@ -71,18 +71,18 @@ Integer Integer::abs(const Integer& x) {
     }
 }
 
-bool Integer::operator==(const Integer& x) {
-    return this->positive == x.positive && this->integer == x.integer;
+bool Integer::operator==(const Integer& rhs) {
+    return this->positive == rhs.positive && this->integer == rhs.integer;
 }
 
-bool Integer::operator>(const Integer& x) {
-    if (this->positive == x.positive) {
+bool Integer::operator>(const Integer& rhs) {
+    if (this->positive == rhs.positive) {
         // signs are same
-        if (this->integer.size() > x.integer.size()) {
+        if (this->integer.size() > rhs.integer.size()) {
             // longer number
             return true;
         }
-        else if (this->integer.size() < x.integer.size()) {
+        else if (this->integer.size() < rhs.integer.size()) {
             // shorter number
             return false;
         }
@@ -90,21 +90,21 @@ bool Integer::operator>(const Integer& x) {
             // equal length
             bool flag = true;
 
-            int length = x.integer.size();
+            int length = rhs.integer.size();
 
-            auto x_it = x.integer.rbegin();
-            auto y_it = this->integer.rbegin();
+            auto rhs_it = rhs.integer.rbegin();
+            auto lhs_it = this->integer.rbegin();
 
             while (length >=0) {
 
-                if (*y_it < *x_it) {
+                if (*lhs_it < *rhs_it) {
                     flag = false;
                     break;
                 }
 
                 length--;
-                x_it++;
-                y_it++;
+                rhs_it++;
+                lhs_it++;
             }
 
             return flag;
@@ -116,63 +116,63 @@ bool Integer::operator>(const Integer& x) {
     }
 }
 
-bool Integer::operator!=(const Integer& x) {
-    return !(*this == x);
+bool Integer::operator!=(const Integer& rhs) {
+    return !(*this == rhs);
 }
 
-bool Integer::operator<(const Integer& x) {
-    return !(*this > x) && *this != x;
+bool Integer::operator<(const Integer& rhs) {
+    return !(*this > rhs) && *this != rhs;
 }
 
-bool Integer::operator>=(const Integer& x) {
-    return (*this > x || *this == x);
+bool Integer::operator>=(const Integer& rhs) {
+    return (*this > rhs || *this == rhs);
 }
 
-bool Integer::operator<=(const Integer& x) {
-    return (*this < x || *this == x);
+bool Integer::operator<=(const Integer& rhs) {
+    return (*this < rhs || *this == rhs);
 }
 
-Integer Integer::operator+(const Integer& x) {
+Integer Integer::operator+(const Integer& rhs) {
     Integer result;
 
-    if (x.positive && this->positive) {
+    if (rhs.positive && this->positive) {
         if (DEBUG) std::cerr << "\nadd::(+,+)";
-        result.positive = x.positive & this->positive;
+        result.positive = rhs.positive & this->positive;
 
-        int length = std::min(this->integer.size(), x.integer.size());
+        int length = std::min(this->integer.size(), rhs.integer.size());
 
-        auto x_it = x.integer.begin();
-        auto y_it = this->integer.begin();
+        auto rhs_it = rhs.integer.begin();
+        auto lhs_it = this->integer.begin();
 
         int carry = 0, sum = 0;
 
         while (length > 0) {
-            sum = (*x_it + *y_it + carry) % 10;
-            carry = (*x_it + *y_it + carry) / 10;
+            sum = (*rhs_it + *lhs_it + carry) % 10;
+            carry = (*rhs_it + *lhs_it + carry) / 10;
 
             result.integer.push_back(sum);
 
-            x_it++;
-            y_it++;
+            rhs_it++;
+            lhs_it++;
             length--;
         }
 
-        if (this->integer.size() >= x.integer.size()) {
-            while (y_it != this->integer.end()) {
-                sum = (*y_it + carry) % 10;
-                carry = (*y_it + carry) / 10;
+        if (this->integer.size() >= rhs.integer.size()) {
+            while (lhs_it != this->integer.end()) {
+                sum = (*lhs_it + carry) % 10;
+                carry = (*lhs_it + carry) / 10;
 
                 result.integer.push_back(sum);
-                y_it++;
+                lhs_it++;
             }
         }
-        else if (this->integer.size() < x.integer.size()) {
-            while (x_it != x.integer.end()) {
-                sum = (*x_it + carry) % 10;
-                carry = (*x_it + carry) / 10;
+        else if (this->integer.size() < rhs.integer.size()) {
+            while (rhs_it != rhs.integer.end()) {
+                sum = (*rhs_it + carry) % 10;
+                carry = (*rhs_it + carry) / 10;
 
                 result.integer.push_back(sum);
-                x_it++;
+                rhs_it++;
             }
         }
 
@@ -180,15 +180,15 @@ Integer Integer::operator+(const Integer& x) {
             result.integer.push_back(carry);
         }
     }
-    else if (!x.positive) {
+    else if (!rhs.positive) {
         // *this + (-x)
         if (DEBUG) std::cerr << "\nadd::(+,-)";
-        result = *this - (-*const_cast<Integer*>(&x));
+        result = *this - (-*const_cast<Integer*>(&rhs));
     }
     else if (!this->positive) {
         // x + (-*this)
         if (DEBUG) std::cerr << "\nadd::(-,+)";
-        result = *const_cast<Integer*>(&x) - *this;
+        result = *const_cast<Integer*>(&rhs) - *this;
     }
     else {
 
@@ -203,45 +203,45 @@ Integer Integer::operator-() {
     return Integer::fix_leading_zeros(result);
 }
 
-Integer Integer::operator-(const Integer& x) {
+Integer Integer::operator-(const Integer& rhs) {
     Integer result;
 
-    if (this->positive && !x.positive) {
-        // *this - (-x)
+    if (this->positive && !rhs.positive) {
+        // *this - (-rhs)
         if (DEBUG) std::cerr << "\nsub::(+,-)";
-        result = *this + (-*const_cast<Integer*>(&x));
+        result = *this + (-*const_cast<Integer*>(&rhs));
     }
-    else if (x.positive && !this->positive) {
-        // x - (-*this)
+    else if (rhs.positive && !this->positive) {
+        // rhs - (-*this)
         if (DEBUG) std::cerr << "\nsub::(-,+)";
-        result = -*this + x;
+        result = -*this + rhs;
         result.positive = false;
     }
     else {
-        if (*this >= x) {
-            // *this - x
+        if (*this >= rhs) {
+            // *this - rhs
             if (DEBUG) std::cerr << "\nsub::(+,+)::>=";
             result.positive = true;
         }
         else {
-            // x - *this
+            // rhs - *this
             if (DEBUG) std::cerr << "\nsub::(+,+)::<";
 
-            result = const_cast<Integer&>(x) - const_cast<const Integer&>(*this);
+            result = const_cast<Integer&>(rhs) - const_cast<const Integer&>(*this);
             result.positive = false;
 
             return Integer::fix_leading_zeros(result);
         }
 
-        int length = x.integer.size();
+        int length = rhs.integer.size();
 
-        auto x_it = x.integer.begin();
-        auto y_it = this->integer.begin();
+        auto rhs_it = rhs.integer.begin();
+        auto lhs_it = this->integer.begin();
 
         int borrow = 0, difference = 0;
 
         while(length > 0) {
-            difference = (*y_it - *x_it - borrow);
+            difference = (*lhs_it - *rhs_it - borrow);
             if (difference < 0) {
                 borrow = 1;
                 difference += 10;
@@ -253,32 +253,32 @@ Integer Integer::operator-(const Integer& x) {
             result.integer.push_back(difference);
 
             length--;
-            x_it++;
-            y_it++;
+            rhs_it++;
+            lhs_it++;
         }
 
-        while(y_it != this->integer.end()) {
-            result.integer.push_back(*y_it - borrow);
+        while(lhs_it != this->integer.end()) {
+            result.integer.push_back(*lhs_it - borrow);
             if(borrow > 0) {
                 borrow = 0;
             }
 
-            y_it++;
+            lhs_it++;
         }
     }
 
     return Integer::fix_leading_zeros(result);
 }
 
-Integer Integer::operator*(const Integer& x) {
-    int maxlen = x.integer.size() + this->integer.size();
+Integer Integer::operator*(const Integer& rhs) {
+    int maxlen = rhs.integer.size() + this->integer.size();
     Integer result(std::string(maxlen, '0'));
 
-    result.positive = (this->positive && x.positive) || (!this->positive && !x.positive);
+    result.positive = (this->positive && rhs.positive) || (!this->positive && rhs.positive);
 
     int offset = 0;
 
-    for(auto mult = x.integer.begin(); mult != x.integer.end(); mult++) {
+    for(auto mult = rhs.integer.begin(); mult != rhs.integer.end(); mult++) {
         int carry = 0, product = 0, sum;
         auto res_it = result.integer.begin();
         for(int i=0; i<offset; i++)
@@ -310,24 +310,24 @@ Integer Integer::operator*(const Integer& x) {
     return Integer::fix_leading_zeros(result);
 }
 
-Integer Integer::operator/(const Integer& x) {
+Integer Integer::operator/(const Integer& rhs) {
     Integer result;
 
     // DIV_BY_ZERO
-    assert(Integer(0) != x);
+    assert(Integer(0) != rhs);
 
-    if (*this < x) {
+    if (*this < rhs) {
         result = 0;
     }
-    else if (Integer(1) == x){
+    else if (Integer(1) == rhs){
         result = *this;
     }
     else {
         // slow division
         Integer tmp = *this;
 
-        while(tmp > x) {
-            tmp = tmp - x;
+        while(tmp > rhs) {
+            tmp = tmp - rhs;
             result = result + Integer(1);
         }
     }
@@ -335,9 +335,9 @@ Integer Integer::operator/(const Integer& x) {
     return Integer::fix_leading_zeros(result);
 }
 
-std::ostream& operator<<(std::ostream& output, const Integer& x) {
-    output << "Integer(" << (x.positive?'+':'-');
-    for (auto digit = x.integer.rbegin(); digit != x.integer.rend(); digit++) {
+std::ostream& operator<<(std::ostream& output, const Integer& rhs) {
+    output << "Integer(" << (rhs.positive?'+':'-');
+    for (auto digit = rhs.integer.rbegin(); digit != rhs.integer.rend(); digit++) {
         output << *digit;
     }
     output << ")" << std::endl;
