@@ -5,11 +5,19 @@
 
 #define DEBUG false
 
-
+/**
+ * @brief      Basic constructor for Integer class, initialises
+ * variable `positive` to undefined (-1) value.
+ */
 Integer::Integer(){
     this->positive = -1;
 }
 
+/**
+ * @brief      Constructs an Integer from an int.
+ *
+ * @param[in]  x     Number as int
+ */
 Integer::Integer(int x) {
     if (x>=0) {
         this->positive = true;
@@ -30,6 +38,13 @@ Integer::Integer(int x) {
     }
 }
 
+/**
+ * @brief      Constructs Integers from strings. Expects positive
+ *  integers as input without a leading `+` sign or negative integers
+ * with a leading `-` sign as input string.
+ *
+ * @param[in]  x     Number represented as string
+ */
 Integer::Integer(std::string x) {
     if (x[0] == '-') {
         this->positive = false;
@@ -51,6 +66,14 @@ Integer::Integer(std::string x) {
     }
 }
 
+/**
+ * @brief      Removes leading zeros from Integer representation. Used
+ *  as a utility in the arithmetic operations.
+ *
+ * @param[in]  x     Integer to remove leading zeros from
+ *
+ * @return     Integer without leading zeros
+ */
 Integer Integer::fix_leading_zeros(const Integer& x) {
     Integer result = x;
 
@@ -61,6 +84,13 @@ Integer Integer::fix_leading_zeros(const Integer& x) {
     return result;
 }
 
+/**
+ * @brief      Gets absolute value of an integer.
+ *
+ * @param[in]  x     Input Integer
+ *
+ * @return     Absolute value of the Integer being passed
+ */
 Integer Integer::abs(const Integer& x) {
     const Integer zero = 0;
     if (const_cast<Integer&>(x) > zero) {
@@ -71,10 +101,25 @@ Integer Integer::abs(const Integer& x) {
     }
 }
 
+/**
+ * @brief      Checks for eqaulity between two Integer objects.
+ *
+ * @param[in]  rhs   The right hand side of the equality.
+ *
+ * @return     Returns `true` if both the rhs and lhs are numerically equal,
+ * otherwise returns `false`.
+ */
 bool Integer::operator==(const Integer& rhs) {
     return this->positive == rhs.positive && this->integer == rhs.integer;
 }
 
+/**
+ * @brief      Checks if left hand side > right hand side.
+ *
+ * @param[in]  rhs   The right hand side of the inequality.
+ *
+ * @return     Returns `true` if lhs > rhs, otherwise `false`.
+ */
 bool Integer::operator>(const Integer& rhs) {
     if (this->positive == rhs.positive) {
         // signs are same
@@ -116,22 +161,58 @@ bool Integer::operator>(const Integer& rhs) {
     }
 }
 
+/**
+ * @brief      Checks for ineqaulity between two Integer objects.
+ *
+ * @param[in]  rhs   The right hand side of the equality.
+ *
+ * @return     Returns `true` if the rhs and lhs are not numerically equal,
+ * otherwise returns `false`.
+ */
 bool Integer::operator!=(const Integer& rhs) {
     return !(*this == rhs);
 }
 
+/**
+ * @brief      Checks if left hand side < right hand side.
+ *
+ * @param[in]  rhs   The right hand side of the inequality.
+ *
+ * @return     Returns `true` if lhs < rhs, otherwise `false`.
+ */
 bool Integer::operator<(const Integer& rhs) {
     return !(*this > rhs) && *this != rhs;
 }
 
+/**
+ * @brief      Checks if left hand side >= right hand side.
+ *
+ * @param[in]  rhs   The right hand side of the inequality.
+ *
+ * @return     Returns `true` if lhs >= rhs, otherwise `false`.
+ */
 bool Integer::operator>=(const Integer& rhs) {
     return (*this > rhs || *this == rhs);
 }
 
+/**
+ * @brief      Checks if left hand side <= right hand side.
+ *
+ * @param[in]  rhs   The right hand side of the inequality.
+ *
+ * @return     Returns `true` if lhs <= rhs, otherwise `false`.
+ */
 bool Integer::operator<=(const Integer& rhs) {
     return (*this < rhs || *this == rhs);
 }
 
+/**
+ * @brief      Addition of two Integer objects
+ *
+ * @param[in]  rhs   The right hand side
+ *
+ * @return     Sum of the left hand side and the right hand side.
+ */
 Integer Integer::operator+(const Integer& rhs) {
     Integer result;
 
@@ -197,28 +278,59 @@ Integer Integer::operator+(const Integer& rhs) {
     return Integer::fix_leading_zeros(result);
 }
 
+/**
+ * @brief      Pre increment an Integer object.
+ */
 void Integer::operator++() {
     *this = Integer::fix_leading_zeros(*this + Integer(1));
 }
 
+/**
+ * @brief      Pre decrement an Integer object.
+ */
 void Integer::operator--() {
     *this = Integer::fix_leading_zeros(*this - Integer(1));
 }
 
+/**
+ * @brief      Post increment an Integer object.
+ *
+ * @param[in]  <unnamed>  Postfix, used internally
+ */
 void Integer::operator++(int) {
     *this = Integer::fix_leading_zeros(*this + Integer(1));
 }
 
+/**
+ * @brief      Post decrement an Integer object.
+ *
+ * @param[in]  <unnamed>  Postfix, used internally
+ */
 void Integer::operator--(int) {
     *this = Integer::fix_leading_zeros(*this - Integer(1));
 }
 
+/**
+ * @brief      Unary neagtion of an Integer object. Flips the `positive`
+ *  flag of the Integer object for non-zero Integer objects.
+ *
+ * @return     Negative of passed Integer.
+ */
 Integer Integer::operator-() {
     Integer result = *this;
-    result.positive = !result.positive;
+    if(result != Integer(0))
+        result.positive = !result.positive;
     return Integer::fix_leading_zeros(result);
 }
 
+/**
+ * @brief      Subtraction of two Integer objects
+ *
+ * @param[in]  rhs   The right hand side
+ *
+ * @return     Result of subtraction of the right hand side from
+ *  the left hand side.
+ */
 Integer Integer::operator-(const Integer& rhs) {
     Integer result;
 
@@ -286,6 +398,13 @@ Integer Integer::operator-(const Integer& rhs) {
     return Integer::fix_leading_zeros(result);
 }
 
+/**
+ * @brief      Multiplication of two Integer objects
+ *
+ * @param[in]  rhs   The right hand side
+ *
+ * @return     Product of the left hand side and the right hand side.
+ */
 Integer Integer::operator*(const Integer& rhs) {
     int maxlen = rhs.integer.size() + this->integer.size();
     Integer result(std::string(maxlen, '0'));
@@ -326,6 +445,14 @@ Integer Integer::operator*(const Integer& rhs) {
     return Integer::fix_leading_zeros(result);
 }
 
+/**
+ * @brief      Quotient of division of two Integer objects
+ *
+ * @param[in]  rhs   The right hand side
+ *
+ * @return     Quotient of the division of the left hand side by
+ *  the right hand side.
+ */
 Integer Integer::operator/(const Integer& rhs) {
     Integer result;
 
@@ -351,6 +478,14 @@ Integer Integer::operator/(const Integer& rhs) {
     return Integer::fix_leading_zeros(result);
 }
 
+/**
+ * @brief      Remainder of division of two Integer objects
+ *
+ * @param[in]  rhs   The right hand side
+ *
+ * @return     Remainder of the division of the left hand side by
+ *  the right hand side.
+ */
 Integer Integer::operator%(const Integer& rhs) {
     Integer result;
 
@@ -386,7 +521,14 @@ Integer Integer::operator%(const Integer& rhs) {
     return Integer::fix_leading_zeros(result);
 }
 
-
+/**
+ * @brief      Prints an Integer object to the stream `output`
+ *
+ * @param      output  The output stream where the Integer object will be printed to
+ * @param[in]  rhs     The right hand side of the expression
+ *
+ * @return     The output stream for the Integer obbject
+ */
 std::ostream& operator<<(std::ostream& output, const Integer& rhs) {
     output << "Integer(" << (rhs.positive?'+':'-');
     for (auto digit = rhs.integer.rbegin(); digit != rhs.integer.rend(); digit++) {
