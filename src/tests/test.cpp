@@ -2,8 +2,8 @@
 #include <iostream>
 
 int main() {
-    Integer a("19");
-    Integer b("80");
+    Integer a("80");
+    Integer b("4");
     Integer c = -32;
     Integer d = 145;
 

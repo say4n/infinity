@@ -50,6 +50,16 @@ Integer::Integer(std::string x) {
     }
 }
 
+Integer Integer::fix_leading_zeros(const Integer& x) {
+    Integer result = x;
+
+    while (result.integer.back() == 0 && result.integer.size() > 0) {
+        result.integer.pop_back();
+    }
+
+    return result;
+}
+
 Integer Integer::abs(const Integer& x) {
     const Integer zero = 0;
     if (const_cast<Integer&>(x) > zero) {
@@ -85,12 +95,9 @@ bool Integer::operator>(const Integer& x) {
             auto y_it = this->integer.rbegin();
 
             while (length >=0) {
-                if (*x_it > *y_it) {
+
+                if (*y_it < *x_it) {
                     flag = false;
-                    break;
-                }
-                else if (*x_it < *y_it) {
-                    flag = true;
                     break;
                 }
 
@@ -186,13 +193,13 @@ Integer Integer::operator+(const Integer& x) {
 
     }
 
-    return result;
+    return Integer::fix_leading_zeros(result);
 }
 
 Integer Integer::operator-() {
     Integer result = *this;
     result.positive = !result.positive;
-    return result;
+    return Integer::fix_leading_zeros(result);
 }
 
 Integer Integer::operator-(const Integer& x) {
@@ -207,6 +214,7 @@ Integer Integer::operator-(const Integer& x) {
         // x - (-*this)
         if (DEBUG) std::cerr << "\nsub::(-,+)";
         result = -*this + x;
+        result.positive = false;
     }
     else {
         if (*this >= x) {
@@ -221,7 +229,7 @@ Integer Integer::operator-(const Integer& x) {
             result = const_cast<Integer&>(x) - const_cast<const Integer&>(*this);
             result.positive = false;
 
-            return result;
+            return Integer::fix_leading_zeros(result);
         }
 
         int length = x.integer.size();
@@ -258,7 +266,7 @@ Integer Integer::operator-(const Integer& x) {
         }
     }
 
-    return result;
+    return Integer::fix_leading_zeros(result);
 }
 
 Integer Integer::operator*(const Integer& x) {
@@ -298,12 +306,29 @@ Integer Integer::operator*(const Integer& x) {
 
         offset++;
     }
-    return result;
+    return Integer::fix_leading_zeros(result);
 }
 
 Integer Integer::operator/(const Integer& x) {
     Integer result;
-    return result;
+
+    if (*this < x) {
+        result = 0;
+    }
+    else if (Integer(1) == x){
+        result = *this;
+    }
+    else {
+        // slow division
+        Integer tmp = *this;
+
+        while(tmp > x) {
+            tmp = tmp - x;
+            result = result + Integer(1);
+        }
+    }
+
+    return Integer::fix_leading_zeros(result);
 }
 
 std::ostream& operator<<(std::ostream& output, const Integer& x) {

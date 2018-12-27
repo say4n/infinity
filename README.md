@@ -60,6 +60,26 @@ int main() {
 }
 ```
 
+Which results in:
+```bash
+a :: Integer(+80)
+b :: Integer(+4)
+c :: Integer(-32)
+d :: Integer(+145)
+a <= b :: 0
+a < b :: 0
+a >= b :: 1
+a > b :: 1
+a == b :: 0
+a != b :: 1
+-a :: Integer(-80)
+a + b :: Integer(+84)
+a - b :: Integer(+76)
+a * b :: Integer(+320)
+a / b :: Integer(+20)
+```
+
+
 ## warning
 This a pet project to explore arbitrary precision integers. If you need arbitrary precision arithmetic, consider using something more mature like [GMP](https://gmplib.org).
 
