@@ -15,6 +15,18 @@ rebuild: clean all
 docs:
 	doxygen Doxyfile
 
+fibonacci: src/tests/fibonacci.cpp Integer
+	mkdir -p $(BUILD)
+	cp src/tests/fibonacci.cpp $(BUILD)
+	cp lib/Integer.h $(BUILD)
+	$(CXX) $(CXXFLAGS) build/fibonacci.cpp -L$(LIB) -lInteger -o $(OUTPUT)
+
+factorial: src/tests/factorial.cpp Integer
+	mkdir -p $(BUILD)
+	cp src/tests/factorial.cpp $(BUILD)
+	cp lib/Integer.h $(BUILD)
+	$(CXX) $(CXXFLAGS) build/factorial.cpp -L$(LIB) -lInteger -o $(OUTPUT)
+
 test: src/tests/test.cpp Integer
 	mkdir -p $(BUILD)
 	cp src/tests/test.cpp $(BUILD)
