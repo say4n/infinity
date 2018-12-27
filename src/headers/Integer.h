@@ -24,26 +24,34 @@
 */
 class Integer{
     public:
+        // Constructors
         Integer();
         Integer(int x);
         Integer(std::string x);
 
+        // Logical operators
         bool operator==(const Integer& x);
         bool operator!=(const Integer& x);
         bool operator>(const Integer& x);
         bool operator<(const Integer& x);
         bool operator>=(const Integer& x);
         bool operator<=(const Integer& x);
+
+        // Arithmetic operators
         Integer operator+(const Integer& x);
         Integer operator-();
         Integer operator-(const Integer& x);
         Integer operator*(const Integer& x);
         Integer operator/(const Integer& x);
+
+        // Stream operators
+        friend std::ostream& operator<<(std::ostream &output,
+                                        const Integer& x);
+
+        // Static members
         static Integer abs(const Integer& x);
         static Integer fix_leading_zeros(const Integer& x);
 
-        friend std::ostream& operator<<(std::ostream &output,
-                                        const Integer& x);
     private:
         std::list<int> integer;
         bool positive;
