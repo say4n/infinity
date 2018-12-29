@@ -451,7 +451,7 @@ Integer Integer::operator*(const Integer& rhs) {
 }
 
 /**
- * @brief      Quotient of division of two Integer objects
+ * @brief      Quotient of *integer division* of two Integer objects
  *
  * @param[in]  rhs   The right hand side
  *
