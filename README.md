@@ -39,8 +39,8 @@ Run `make test` in the `src` directory to compile the sanity checks. Execute the
 int main() {
     Integer a("80");
     Integer b("4");
-    Integer c = -32;
-    Integer d = 145;
+    Integer c = 11;
+    Integer d = 40;
 
     std::cout << "a :: " << a;
     std::cout << "b :: " << b;
@@ -60,6 +60,7 @@ int main() {
     std::cout << "a * b :: " << a * b;
     std::cout << "a / b :: " << a / b;
     std::cout << "a % b :: " << a % b;
+    std::cout << "Integer::pow(c, d) :: " << Integer::pow(c, d);
 
     return 0;
 }
@@ -69,8 +70,8 @@ Which results in:
 ```bash
 a :: Integer(+80)
 b :: Integer(+4)
-c :: Integer(-32)
-d :: Integer(+145)
+c :: Integer(+11)
+d :: Integer(+40)
 a <= b :: 0
 a < b :: 0
 a >= b :: 1
@@ -83,6 +84,7 @@ a - b :: Integer(+76)
 a * b :: Integer(+320)
 a / b :: Integer(+20)
 a % b :: Integer(+0)
+Integer::pow(c, d) :: Integer(+452592555681759518058893560348969204658401)
 ```
 
 

@@ -4,8 +4,8 @@
 int main() {
     Integer a("80");
     Integer b("4");
-    Integer c = -32;
-    Integer d = 145;
+    Integer c = 11;
+    Integer d = 40;
 
     std::cout << "a :: " << a;
     std::cout << "b :: " << b;
@@ -25,6 +25,7 @@ int main() {
     std::cout << "a * b :: " << a * b;
     std::cout << "a / b :: " << a / b;
     std::cout << "a % b :: " << a % b;
+    std::cout << "Integer::pow(c, d) :: " << Integer::pow(c, d);
 
     return 0;
 }

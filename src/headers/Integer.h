@@ -18,6 +18,7 @@
 *       -# Multiplication
 *       -# Division
 *       -# Negation
+ *      -# Exponentiation
 *   - Logical
 *       -# Comparison (<, >, <=, >=)
 *       -# Equality (!=, ==)
@@ -59,6 +60,7 @@ class Integer{
         // Static members
         static Integer abs(const Integer&);
         static Integer fix_leading_zeros(const Integer&);
+        static Integer pow(const Integer&, const Integer&);
 
     private:
         std::list<int> integer;

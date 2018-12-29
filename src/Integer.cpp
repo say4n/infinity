@@ -522,6 +522,38 @@ Integer Integer::operator%(const Integer& rhs) {
 }
 
 /**
+ * @brief      Raise base exponent times
+ *
+ * @param[in]  base      The base
+ * @param[in]  exponent  The exponent
+ *
+ * @return     The result of exponentiation (base ^ exponent)
+ */
+Integer Integer::pow(const Integer& base, const Integer& exponent) {
+    Integer result = Integer(1);
+
+    assert(Integer(0) <= exponent);
+
+    if (Integer(0) == exponent) {
+        result = Integer(1);
+    }
+    else if (Integer(1) == exponent) {
+        result = base;
+    }
+    else {
+        Integer tmp = exponent;
+
+        while (Integer(0) < tmp) {
+            result = result * base;
+            tmp--;
+        }
+    }
+
+    return result;
+}
+
+
+/**
  * @brief      Prints an Integer object to the stream `output`
  *
  * @param      output  The output stream where the Integer object will be printed to
