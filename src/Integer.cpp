@@ -92,8 +92,7 @@ Integer Integer::fix_leading_zeros(const Integer& x) {
  * @return     Absolute value of the Integer being passed
  */
 Integer Integer::abs(const Integer& x) {
-    const Integer zero = 0;
-    if (const_cast<Integer&>(x) > zero) {
+    if (const_cast<Integer&>(x) > 0) {
         return x;
     }
     else {
