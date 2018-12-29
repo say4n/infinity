@@ -385,10 +385,16 @@ Integer Integer::operator-(const Integer& rhs) {
         }
 
         while(lhs_it != this->integer.end()) {
-            result.integer.push_back(*lhs_it - borrow);
-            if(borrow > 0) {
+            difference = *lhs_it - borrow;
+            if (difference < 0) {
+                borrow = 1;
+                difference += 10;
+            }
+            else {
                 borrow = 0;
             }
+
+            result.integer.push_back(difference);
 
             lhs_it++;
         }
@@ -541,9 +547,10 @@ Integer Integer::pow(const Integer& base, const Integer& exponent) {
     }
     else {
         Integer tmp = exponent;
-        Integer div_by_two = tmp % 2;
 
+        Integer div_by_two = tmp % 2;
         Integer new_exp = tmp / 2;
+
         result = Integer::pow(base, new_exp) * Integer::pow(base, new_exp);
 
         if (div_by_two != 0) {

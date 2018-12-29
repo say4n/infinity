@@ -5,7 +5,7 @@ int main() {
     Integer a("80");
     Integer b("4");
     Integer c = 11;
-    Integer d = 40;
+    Integer d = 100;
 
     std::cout << "a :: " << a;
     std::cout << "b :: " << b;
