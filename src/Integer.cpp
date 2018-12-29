@@ -542,10 +542,13 @@ Integer Integer::pow(const Integer& base, const Integer& exponent) {
     }
     else {
         Integer tmp = exponent;
+        Integer div_by_two = tmp % 2;
 
-        while (Integer(0) < tmp) {
+        Integer new_exp = tmp / 2;
+        result = Integer::pow(base, new_exp) * Integer::pow(base, new_exp);
+
+        if (div_by_two != 0) {
             result = result * base;
-            tmp--;
         }
     }
 
