@@ -2,11 +2,11 @@
 #include <iostream>
 
 int main() {
-    Float x(4, 1);
+    Float x(4, -2);
     Float y(123, -1);
 
-    std::cout << x;
-    std::cout << y;
+    std::cout << "x :: " << x;
+    std::cout << "y :: " << y;
 
     std::cout << "x + y :: " << x + y;
     std::cout << "x - y :: " << x - y;

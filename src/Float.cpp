@@ -21,6 +21,7 @@ Float::Float(int base, int exp) {
     this->exponent = Integer(exp);
 }
 
+// FIXME:: Only works when either of the exponents are non-negative
 Float Float::operator+(const Float& rhs) {
     Float ret, lhs = *this, trhs = rhs;
 
@@ -50,6 +51,7 @@ Float Float::operator+(const Float& rhs) {
     return ret;
 }
 
+// FIXME:: Only works when either of the exponents are non-negative
 Float Float::operator-(const Float& rhs) {
     Float ret, lhs = *this, trhs = rhs;
 
