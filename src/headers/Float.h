@@ -14,10 +14,7 @@ class Float {
     public:
         Float();
         Float(int);
-        Float(float);
-        Float(double);
-        Float(std::string);
-        ~Float();
+        Float(int, int);
 
         Float operator+(const Float&);
         Float operator-(const Float&);

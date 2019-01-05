@@ -156,6 +156,11 @@ bool Integer::operator>(const Integer& rhs) {
                     break;
                 }
 
+                if (*lhs_it > *rhs_it) {
+                    flag = true;
+                    break;
+                }
+
                 length--;
                 rhs_it++;
                 lhs_it++;
