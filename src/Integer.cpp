@@ -140,8 +140,10 @@ bool Integer::operator>(const Integer& rhs) {
         }
         else {
             // equal length
-            bool flag = true;
+            if (*this == rhs)
+                return false;
 
+            bool flag = true;
             int length = rhs.integer.size();
 
             auto rhs_it = rhs.integer.rbegin();
@@ -159,7 +161,7 @@ bool Integer::operator>(const Integer& rhs) {
                 lhs_it++;
             }
 
-            return flag & (*this != rhs);
+            return flag;
         }
     }
     else {
@@ -552,6 +554,9 @@ Integer Integer::pow(const Integer& base, const Integer& exponent) {
     }
     else if (Integer(1) == exponent) {
         result = base;
+    }
+    else if (Integer(2) == exponent) {
+        result = const_cast<Integer&>(base) * base;
     }
     else {
         Integer tmp = exponent;
