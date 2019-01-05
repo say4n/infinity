@@ -70,6 +70,10 @@ std::list<int> Integer::getInteger() const {
     return this->integer;
 }
 
+bool Integer::isPositive() const {
+    return this->positive;
+}
+
 /**
  * @brief      Removes leading zeros from Integer representation. Used
  *  as a utility in the arithmetic operations.
