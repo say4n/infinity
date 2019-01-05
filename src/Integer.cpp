@@ -159,7 +159,7 @@ bool Integer::operator>(const Integer& rhs) {
                 lhs_it++;
             }
 
-            return flag;
+            return flag & (*this != rhs);
         }
     }
     else {
