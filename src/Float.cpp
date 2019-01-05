@@ -2,12 +2,18 @@
 #include <iostream>
 #include <cctype>
 #include <cassert>
+#include <list>
 
 #define DEBUG false
 
 Float::Float() {
     this->base = 0;
-    this->exponent = 1;
+    this->exponent = 0;
+}
+
+Float::Float(int x) {
+    this->base = x;
+    this->exponent = 0;
 }
 
 Float::Float(float) {
@@ -47,12 +53,17 @@ Float Float::operator/(const Float&) {
 }
 
 std::ostream& operator<<(std::ostream& output, const Float& rhs) {
-    output << "Float(";
-    for (auto digit = rhs.base.getInteger().rbegin(); digit != rhs.base.getInteger().rend(); digit++) {
+    output << "Float(" << (rhs.base.isPositive() ? '+':'-');
+    std::list<int> base = rhs.base.getInteger();
+    std::list<int> exponent = rhs.exponent.getInteger();
+
+
+    for(auto digit = base.rbegin(); digit != base.rend(); digit++) {
         output << *digit;
     }
-    output << " e ";
-    for (auto digit = rhs.exponent.getInteger().rbegin(); digit != rhs.exponent.getInteger().rend(); digit++) {
+    output << "e" << (rhs.base.isPositive() ? '+':'-');
+
+    for(auto digit = exponent.rbegin(); digit != exponent.rend(); digit++) {
         output << *digit;
     }
     output << ")" << std::endl;

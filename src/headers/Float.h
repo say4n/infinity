@@ -13,6 +13,7 @@
 class Float {
     public:
         Float();
+        Float(int);
         Float(float);
         Float(double);
         Float(std::string);

@@ -24,14 +24,14 @@ fibonacci: src/tests/fibonacci.cpp infinity
 factorial: src/tests/factorial.cpp infinity
 	mkdir -p $(BUILD)
 	cp src/tests/factorial.cpp $(BUILD)
-	cp lib/Integer.h $(BUILD)
+	cp lib/*.h $(BUILD)
 	$(CXX) $(CXXFLAGS) build/factorial.cpp -L$(LIB) -lInfinity -o $(OUTPUT)
 
-testFloat: src/tests/testFloat.cpp Float
+testFloat: src/tests/testFloat.cpp infinity
 	mkdir -p $(BUILD)
 	cp src/tests/testFloat.cpp $(BUILD)
-	cp lib/Float.h $(BUILD)
-	$(CXX) $(CXXFLAGS) build/testFloat.cpp -L$(LIB) -lFloat -o $(OUTPUT)
+	cp lib/*.h $(BUILD)
+	$(CXX) $(CXXFLAGS) build/testFloat.cpp -L$(LIB) -lInfinity -o $(OUTPUT)
 
 testInteger: src/tests/testInteger.cpp Integer
 	mkdir -p $(BUILD)
@@ -48,7 +48,7 @@ Float: Float.o
 	mkdir -p $(LIB)
 	ar rvs $(LIB)/libFloat.a Float.o
 	rm -f Float.o
-	cp src/headers/Float.h $(LIB)
+	cp src/headers/*.h $(LIB)
 
 Float.o: src/Float.cpp
 	$(CXX) $(CXXFLAGS) -c src/Float.cpp
