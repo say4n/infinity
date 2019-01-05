@@ -54,6 +54,9 @@ class Integer{
         Integer operator/(const Integer&);
         Integer operator%(const Integer&);
 
+        // Getter
+        std::list<int> getInteger() const;
+
         // Bitwise operators
         friend std::ostream& operator<<(std::ostream&, const Integer&);
 

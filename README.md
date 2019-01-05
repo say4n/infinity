@@ -1,6 +1,6 @@
 <h2 align="center">
-    <img src="https://cdn.jsdelivr.net/gh/Sayan98/infinity@latest/assets/infinity.svg" height=200 alt="infinity: an arbitrary precision integer arithmetic library">
-    <br>a signed arbitrary precision integer arithmetic library<br>
+    <img src="https://cdn.jsdelivr.net/gh/Sayan98/infinity@latest/assets/infinity.svg" height=200 alt="infinity: an arbitrary precision arithmetic library">
+    <br>a signed arbitrary precision arithmetic library<br>
 <h2>
 
 <h5 align="center">
@@ -14,23 +14,27 @@
 1. [usage](#usage)
 2. [tests](#tests)
 3. [example](#example)
+    - [integer](#integer)
+    - [float](#float)
 4. [warning](#warning)
 5. [author](#author)
 
 ## usage
 
-1. Build `libInteger.a` using `make all` in the `src` directory.
-2. Copy the `Integer.h` and `libInteger.a` file to your project.
-3. Include `Integer.h` in your source file.
-4. Compile with `-L$(LIB)` and `-lInteger` flags where `LIB` is the directory where `libInteger.a` resides in.
+1. Build `libInfinity.a` using `make all` in the `src` directory.
+2. Copy the header files and `libInteger.a` file to your project.
+3. Include the header files as per requirement in your source file.
+4. Compile with `-L$(LIB)` and `-lInfinity` flags where `LIB` is the directory where `libInfinity.a` resides in.
 
 
 ## tests
 
-Run `make test` in the `src` directory to compile the sanity checks. Execute the generated executable with `./test.out`.
+Run `make testInteger` in the `src` directory to compile the sanity checks. Execute the generated executable with `./test.out`.
 
 
 ## example
+
+### integer
 
 ```cpp
 #include <iostream>
@@ -87,9 +91,13 @@ a % b :: Integer(+0)
 Integer::pow(c, d) :: Integer(+137806123398222701841183371720896367762643312000384664331464775521549852095523076769401159497458526446001)
 ```
 
+### float
+
+work in progress
+
 
 ## warning
-This a pet project to explore arbitrary precision integers. If you need arbitrary precision arithmetic, consider using something more mature like [GMP](https://gmplib.org).
+This a pet project to explore arbitrary precision arithmetic. If you need arbitrary precision arithmetic, consider using something more mature like [GMP](https://gmplib.org).
 
 
 ## author
